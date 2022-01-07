@@ -5,8 +5,7 @@ public class Manager
 {
     
     // Data structures
-
-
+ 
     //#region Book
     class Book
     {
@@ -143,16 +142,35 @@ public class Manager
         //#endregion
     }
     //#endregion
+    //#region Issue
+    class Issue
+    {
+        Book book;
+        Customer customer;
+        String token;
+        int status;
+        Issue(Book b,Customer c)
+        {
+            this.book=b;
+            this.customer=c;
+            status=1;
+            token=generateId(book,customer);
+        }
+
+        
+        // mark the book in the library issued
+    }
 
     //#region Library
     ArrayList<Book> Library=new ArrayList<Book>();
+    ArrayList<Issue> Issues=new ArrayList<Issue>();
     // HashMap for Book management with custome ID for managing book issue
     // HashTable<Integer,Book> Library=new HashTable<Integer,Book>();
-    // int BookCounter;
-    // String generateId(Book book,Customer customer)
-    // {
-    //      return book.getTitle().substring(0,4)+cutomer.getName().substring(0,4)+BookCounter++;
-    // }
+    int BookCounter;
+    String generateId(Book book,Customer customer)
+    {
+         return book.getTitle().substring(0,4)+customer.getName().substring(0,4)+BookCounter++;
+    }
 
     //#endregion
     Scanner sc=new Scanner(System.in);
@@ -167,12 +185,69 @@ public class Manager
     
     void start()
     {
-        System.out.println(" Welcome to the library \n  1. Add a book to the collection \n 2. Search for a book by title \n 3. Browse Genere \n 4. Remove a book from the collection \n 5 Exit ");
-        int choice=sc.nextInt();
-        driver(choice);
+        int login=1;
+        if(login==1)
+        {
+            
+            CustomerDriver();
+        }
+
+        else
+        {
+            AdminDriver();
+            
+        }
     }
-    void driver(int choice)
+    void CustomerDriver()
     {
+        System.out.println(" Welcome to the library \n  1. Issue a Book \n 2. Search for a book by title \n 3. Return book \n 4. Remove a book from the collection \n 5 Exit ");
+        int choice=sc.nextInt();
+        switch (choice) {
+            case 1:
+                issueBook();
+                break;
+            case 2:
+                searchBook();
+                break;
+            case 3:
+                returnBook();
+                break;
+            case 4:
+                removeBook();
+                break;
+            case 5:
+                System.exit(0);
+            default:
+                System.out.println("invalid choice, try again!!!");
+                start();
+                break;
+        }
+
+    }
+    void issueBook()
+    {
+        print("Enter Your name");
+        String CustomerName=sc.next();
+        print("Enter Book Title");
+        String title=sc.next();
+
+    }
+    void returnBook()
+    {
+        print("Enter Your name");
+        String CustomerName=sc.next();
+        print("Enter Book Title");
+        String title=sc.next();
+        
+    }
+
+
+
+    void AdminDriver()
+    {
+        System.out.println(" Welcome to the library \n  1. Add a book to the collection \n 2. Search for a book by title \n 3. Browse Genere \n 4. Remove a book from the collection \n 5 Exit ");
+            int choice=sc.nextInt();
+        
         switch (choice) {
             case 1:
                 addBook();
