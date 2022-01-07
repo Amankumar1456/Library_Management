@@ -160,9 +160,10 @@ public class Manager
         
         // mark the book in the library issued
     }
-
+    //#endregion
+    
     //#region Library
-    ArrayList<Book> Library=new ArrayList<Book>();
+    static ArrayList<Book> Library=new ArrayList<Book>();
     ArrayList<Issue> Issues=new ArrayList<Issue>();
     // HashMap for Book management with custome ID for managing book issue
     // HashTable<Integer,Book> Library=new HashTable<Integer,Book>();
@@ -182,10 +183,32 @@ public class Manager
        Manager m=new Manager();
        m.start();
     }
-    
+    //#region General Main funcs
+    public static void update()
+    {
+        print("update is called");
+        sortLibrary();
+        printLibrary();
+    }
+    public static void sortLibrary()
+    {
+        print(" Sorting library;s books");
+        Library.sort((o1, o2)
+                      -> o1.getTitle().compareTo(
+                          o2.getTitle()));
+    }
+    public static void printLibrary()
+    {
+        print("Printing library's books");
+        for (Book obj : Library) {
+            System.out.println(obj.getTitle());
+        }
+    }
+    //#endregion
     void start()
     {
-        int login=1;
+        int login=sc.nextInt();
+        print(" 1 for customer \n 0 for admin");
         if(login==1)
         {
             
@@ -195,7 +218,7 @@ public class Manager
         else
         {
             AdminDriver();
-            
+            update();
         }
     }
     void CustomerDriver()
@@ -205,16 +228,16 @@ public class Manager
         switch (choice) {
             case 1:
                 issueBook();
-                break;
+                //break;
             case 2:
                 searchBook();
-                break;
+                //break;
             case 3:
                 returnBook();
-                break;
+                //break;
             case 4:
                 removeBook();
-                break;
+                //break;
             case 5:
                 System.exit(0);
             default:
@@ -238,16 +261,19 @@ public class Manager
         String CustomerName=sc.next();
         print("Enter Book Title");
         String title=sc.next();
-        
+
     }
 
 
 
     void AdminDriver()
     {
-        System.out.println(" Welcome to the library \n  1. Add a book to the collection \n 2. Search for a book by title \n 3. Browse Genere \n 4. Remove a book from the collection \n 5 Exit ");
-            int choice=sc.nextInt();
         
+            int choice=0;//=sc.nextInt();
+        while(choice<5)
+        {
+            System.out.println(" Welcome to the library \n  1. Add a book to the collection \n 2. Search for a book by title \n 3. Browse Genere \n 4. Remove a book from the collection \n 5 Exit ");
+            choice=sc.nextInt();
         switch (choice) {
             case 1:
                 addBook();
@@ -268,6 +294,7 @@ public class Manager
                 start();
                 break;
         }
+    }
     }
     void addBook()
     {
